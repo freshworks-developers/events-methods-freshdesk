@@ -1,0 +1,24 @@
+document.onreadystatechange = function () {
+  if (document.readyState === 'interactive') renderApp();
+};
+
+async function renderApp() {
+  let _client = await app.initialized();
+  window['client'] = _client;
+  client.events.on('app.activated', renderSidebar);
+  return;
+}
+
+function onAppActivate() {
+  var textElement = document.getElementById('apptext');
+  var getContact = client.data.get('contact');
+  getContact.then(showContact).catch(handleErr);
+
+  function showContact(payload) {
+    textElement.innerHTML = `Ticket created by ${payload.contact.name}`;
+  }
+}
+
+function handleErr(err) {
+  console.error(`Error occured. Details:`, err);
+}
