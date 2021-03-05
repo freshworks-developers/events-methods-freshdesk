@@ -18,6 +18,7 @@ function phoneClickListener() {
     const { number } = event.helper.getData();
     const label = document.querySelector('.spotlight');
     label.setAttribute('value', `Phone Number: ${number}`);
+    label.setAttribute('color', `green`);
     console.log(number);
   });
   /** ~ end ~ */

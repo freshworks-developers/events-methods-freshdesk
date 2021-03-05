@@ -14,6 +14,7 @@ function renderApp() {
 
 function eventsInTktDetailsPage() {
   const spotlight = document.querySelector('.spotlight');
+  
   let clickEvents = [
     'ticket.replyClick',
     'ticket.sendReply',
