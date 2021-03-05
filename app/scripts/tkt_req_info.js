@@ -61,6 +61,7 @@ function eventsInTktDetailsPage() {
       let eventName = event.type;
       const row = `<fw-label value="${eventName.slice(7)} allowed" color="red"></fw-label>`;
       spotlight.insertAdjacentHTML('afterend', row);
+      event.helper.done();
     }
   });
 }
