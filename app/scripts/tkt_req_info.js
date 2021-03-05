@@ -14,7 +14,7 @@ function renderApp() {
 
 function eventsInTktDetailsPage() {
   const spotlight = document.querySelector('.spotlight');
-  
+
   let clickEvents = [
     'ticket.replyClick',
     'ticket.sendReply',
@@ -33,9 +33,34 @@ function eventsInTktDetailsPage() {
     'ticket.deleteTimer'
   ];
 
+  let interceptEvents = {
+    prevent: ['ticket.closeTicketClick', 'ticket.deleteTicketClick'],
+    allow: ['ticket.propertiesUpdated', 'ticket.sendReply']
+  };
+
   clickEvents.forEach(function register(click) {
-    client.events.on(click, function writeToDOM() {
+    client.events.on(click, function writeToDOM(event) {
       spotlight.insertAdjacentHTML('afterend', `<fw-label value="${click}" color="green"></fw-label>`);
     });
+  });
+
+  interceptEvents['prevent'].forEach(function registerCb(click) {
+    client.events.on(click, preventClickEvent, { intercept: true });
+
+    function preventClickEvent(event) {
+      let eventName = event.type;
+      const row = `<fw-label value="${eventName.slice(7)} prevented" color="red"></fw-label>`;
+      spotlight.insertAdjacentHTML('afterend', row);
+    }
+  });
+
+  interceptEvents['allow'].forEach(function registerCb(click) {
+    client.events.on(click, allowClickEvents);
+
+    function allowClickEvents(event) {
+      let eventName = event.type;
+      const row = `<fw-label value="${eventName.slice(7)} allowed" color="red"></fw-label>`;
+      spotlight.insertAdjacentHTML('afterend', row);
+    }
   });
 }
