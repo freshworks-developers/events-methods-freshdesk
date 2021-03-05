@@ -19,12 +19,7 @@ function renderApp() {
 
 function phoneClickListener() {
   /** ~ play ground starts here ~ */
-  client.events.on('cti.triggerDialer', function renderPhoneNumber(event) {
-    const { number } = event.helper.getData();
-    const label = document.querySelector('.spotlight');
-    label.setAttribute('value', `Phone Number: ${number}`);
-    label.setAttribute('color', `green`);
-    console.log(number);
-  });
+
+  
   /** ~ end ~ */
 }
